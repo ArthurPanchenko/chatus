@@ -1,0 +1,35 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>{% block title %}{% endblock title %}</title>
+</head>
+<body>
+
+    <div class="container">
+
+        <header>
+            <ul class="header__list">
+                <li class="header__li"><a href="{% url 'lobby' %}">Home</a></li>
+                <li class="header__li"><a href="{% url 'create_chat' %}">Create chat</a></li>
+            </ul>
+
+            {% if user.is_authenticated %}
+
+                Logout
+
+            {% endif %}
+        </header>
+
+        {% block content %}
+        {% endblock content %}
+
+    </div>
+    
+
+</body>
+</html>

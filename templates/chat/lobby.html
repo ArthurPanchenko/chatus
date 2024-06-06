@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+
+{% block title %}Lobby{% endblock title %}
+
+{% block content %}
+
+
+    <div class="content">
+        <h1 class="content__h1">{{ user.username }}</h1>
+    
+        <ul class="chats__list">
+            {% for chat in chats %}
+
+                <li class="chat">
+                    <a class="chat__link" href="{% url 'chat' chat.uuid %}">
+                        <h3 class="chat__title">{{ chat.title }}</h3>
+                        <span class="chat__body">{{ chat.get_last_message.author }}: 
+                        {{ chat.get_last_message.text }}</span>
+                    </a>
+                </li>
+
+            {% endfor %}
+        </ul>
+
+    </div>
+
+{% endblock content %}

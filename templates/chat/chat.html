@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h1>{{ chat.title }}</h1>
+
+    {% for message in chat.messages.all %}
+
+        <p>{{ message.author }} $ {{ message.created }} # {{ message.text }}</p>
+
+    {% endfor %}
+
+{% endblock content %}
