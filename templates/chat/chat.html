@@ -9,16 +9,16 @@
         <div class="chat__content" id="chat__body">
             {% for message in chat.messages.all %}
 
-            <div class="message">
-                <div class="message__data">
-                    <div class="author">{{ message.author }}</div>
-                    <div class="text">{{ message.text }}</div>
+                <div class="message">
+                    <div class="message__data">
+                        <div class="author">{{ message.author }}</div>
+                        <div class="text">{{ message.text }}</div>
+                    </div>
+                    
+                    <div class="date">{{ message.created }} </div>
                 </div>
-                
-                <div class="date">{{ message.created }} </div>
-            </div>
 
-        {% endfor %}
+            {% endfor %}
         </div>
 
         <div class="chat__message">
@@ -30,6 +30,73 @@
     </div>
     
 
+    <script>
 
+        let messageInput = document.querySelector('#message__input')
+        let messageInputSubmit = document.querySelector('#message__submit')
+
+        const chatSocket = new WebSocket(
+            'ws://'
+            + window.location.host
+            + '/chat/'
+            + '{{chat.uuid}}/'
+        )
+
+        chatSocket.onmessage = function (respond) {
+            json_respond = JSON.parse(respond.data)
+            create_message(json_respond['author'], json_respond['text'], json_respond['date'])
+        }
+
+        messageInputSubmit.addEventListener('click', (e) => {
+            if (messageInput.value) {
+                let message = messageInput.value
+                chatSocket.send(
+                    JSON.stringify({
+                        'message': message
+                    })
+                )
+            }
+        })
+
+
+        function create_message(author, text, created) {
+            let div_message = document.createElement('div');
+            let div_message__data = document.createElement('div');
+            let div_date = document.createElement('div')
+
+            div_message.classList.add('message')
+            div_message__data.classList.add('message__data')
+            div_date.classList.add('date')
+            
+            
+            div_message.appendChild(div_message__data)
+            div_message.appendChild(div_date)
+
+            let div_author = document.createElement('div');
+            let div_text = document.createElement('div');
+
+            div_author.classList.add('author')
+            div_text.classList.add('text')
+
+            div_message__data.appendChild(div_author)
+            div_message__data.appendChild(div_text)
+
+            let node_author = document.createTextNode(author)
+            let node_text = document.createTextNode(text)
+            let node_date = document.createTextNode(created)
+
+            div_date.appendChild(node_date)
+            div_author.appendChild(node_author)
+            div_text.appendChild(node_text)
+
+            let chat_content = document.querySelector('#chat__body')
+            chat_content.appendChild(div_message)
+
+            let chat_body = document.getElementById("chat__body");
+            chat_body.scrollTop = chat_body.scrollHeight;
+
+        }
+
+    </script>
 
 {% endblock content %}
