@@ -2,12 +2,34 @@
 
 {% block content %}
 
-    <h1>{{ chat.title }}</h1>
+    <div class="content">
 
-    {% for message in chat.messages.all %}
+        <h1 class="content__h1 centered">{{ chat.title }}</h1>
 
-        <p>{{ message.author }} $ {{ message.created }} # {{ message.text }}</p>
+        <div class="chat__content" id="chat__body">
+            {% for message in chat.messages.all %}
 
-    {% endfor %}
+            <div class="message">
+                <div class="message__data">
+                    <div class="author">{{ message.author }}</div>
+                    <div class="text">{{ message.text }}</div>
+                </div>
+                
+                <div class="date">{{ message.created }} </div>
+            </div>
+
+        {% endfor %}
+        </div>
+
+        <div class="chat__message">
+            <input type="text" id="message__input">
+            <input type="submit" value="Send message" id="message__submit">
+        </div>
+        
+
+    </div>
+    
+
+
 
 {% endblock content %}
