@@ -75,6 +75,14 @@ TEMPLATES = [
 
 # WSGI_APPLICATION = 'chatus.wsgi.application'
 ASGI_APPLICATION = 'chatus.asgi.application'
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": ['redis://127.0.0.1:6379/1'],
+        },
+    },
+}
 
 
 # Database
@@ -121,6 +129,8 @@ TIME_ZONE = 'Europe/Moscow'
 USE_I18N = True
 
 USE_TZ = False
+
+DATETIME_FORMAT="%Y-%m-%d%H:%M"
 
 
 # Static files (CSS, JavaScript, Images)

@@ -44,6 +44,7 @@
 
         chatSocket.onmessage = function (respond) {
             json_respond = JSON.parse(respond.data)
+            console.log(json_respond)
             create_message(json_respond['author'], json_respond['text'], json_respond['date'])
         }
 
